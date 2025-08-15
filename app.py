@@ -6,6 +6,7 @@ import time
 app = Flask(__name__)
 
 
+
 def get_chrome_options():
     co = ChromiumOptions()
 
@@ -13,7 +14,7 @@ def get_chrome_options():
     co.set_argument('--remote-debugging-port=9222')
 
     # ✅ 禁用沙箱（适用于 root 用户）
-    # co.set_argument('--no-sandbox')
+    co.set_argument('--no-sandbox')
 
     # ✅ 避免共享内存问题（服务器常见）
     co.set_argument('--disable-dev-shm-usage')
