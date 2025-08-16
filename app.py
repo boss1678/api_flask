@@ -112,14 +112,14 @@ def index():
     return Response("Flask运行正常...", content_type='text/plain; charset=utf-8')
 
 
-@app.route('/<word>', methods=['GET'])
-def get_song_url(word):
-    word = urllib.parse.unquote(word, encoding='utf-8')
+@app.route('/input', methods=['GET'])
+def get_song_url():
+    word = request.args.get('input', '')
     results = last(word)
     flat = [item for group in results for item in group][:10]
     # 构造扁平字典结构，每项独立键
     formatted_data = {
-        f"result_{i + 1}": {
+        f"{word}_{i + 1}": {
             "desc": item.get("desc", ""),
             "url": item.get("url", "")
         }
