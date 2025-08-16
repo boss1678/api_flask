@@ -118,7 +118,7 @@ def get_song_url(word):
     flat = [item for group in results for item in group][:10]
     # 构造扁平字典结构，每项独立键
     formatted_data = {
-        f"{word}_{i + 1}": {
+        f"result_{i + 1}": {
             "desc": item.get("desc", ""),
             "url": item.get("url", "")
         }
