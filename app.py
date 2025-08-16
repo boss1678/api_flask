@@ -114,6 +114,7 @@ def index():
 
 @app.route('/<word>', methods=['GET'])
 def get_song_url(word):
+    word = urllib.parse.unquote(word, encoding='utf-8')
     results = last(word)
     flat = [item for group in results for item in group][:10]
     # 构造扁平字典结构，每项独立键
