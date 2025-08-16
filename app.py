@@ -65,7 +65,6 @@ def get_response(song_name):
     return resp_lst
 
 
-
 def song_url(item):
     dic_lst = []
     data_ = item.get('data')
@@ -106,15 +105,16 @@ def last(name):
 
 @app.route('/')
 def index():
-    return 'flask运行正常....'
+    return jsonify({"status": "flask运行正常"})
 
 
 @app.route('/<word>', methods=['GET'])
 def get_song_url(word):
+    url_lst = []
     results = last(word)
     flat = [item for group in results for item in group]
     return jsonify({
-        'result': flat
+        word: flat
     })
 
 
