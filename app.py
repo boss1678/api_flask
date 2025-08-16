@@ -105,17 +105,24 @@ def last(name):
 
 @app.route('/')
 def index():
-    return jsonify({"status": "flask运行正常"})
+    return "Flask运行正常..."
 
 
 @app.route('/<word>', methods=['GET'])
 def get_song_url(word):
     url_lst = []
     results = last(word)
-    flat = [item for group in results for item in group]
-    return jsonify({
-        word: flat
-    })
+    flat = [item for group in results for item in group][:10]
+    # 构造扁平字典结构，每项独立键
+    formatted_data = {
+        f"{word}_{i + 1}": {
+            "desc": item.get("desc", ""),
+            "url": item.get("url", "")
+        }
+        for i, item in enumerate(flat)
+    }
+
+    return jsonify(formatted_data)
 
 
 if __name__ == '__main__':
