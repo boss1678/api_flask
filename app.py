@@ -2,7 +2,7 @@
 
 from DrissionPage import ChromiumOptions, ChromiumPage
 from concurrent.futures import ThreadPoolExecutor
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 import time
 import uuid, os, shutil
 import urllib.parse
