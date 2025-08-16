@@ -114,7 +114,7 @@ def get_song_url(word):
     results = last(word)
     flat = [item for group in results for item in group]
     return jsonify({
-        word: flat
+        'result': flat
     })
 
 
