@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from DrissionPage import ChromiumOptions, ChromiumPage
 from concurrent.futures import ThreadPoolExecutor
 from flask import Flask, request, jsonify
 import time
 import uuid, os, shutil
+import urllib.parse
 
 app = Flask(__name__)
 
@@ -110,7 +113,6 @@ def index():
 
 @app.route('/<word>', methods=['GET'])
 def get_song_url(word):
-    url_lst = []
     results = last(word)
     flat = [item for group in results for item in group][:10]
     # 构造扁平字典结构，每项独立键
