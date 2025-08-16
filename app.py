@@ -109,7 +109,7 @@ def last(name):
 
 @app.route('/')
 def index():
-    return "Flask运行正常..."
+    return Response("Flask运行正常...", content_type='text/plain; charset=utf-8')
 
 
 @app.route('/<word>', methods=['GET'])
