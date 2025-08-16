@@ -125,7 +125,9 @@ def get_song_url(word):
         for i, item in enumerate(flat)
     }
 
-    return jsonify(formatted_data)
+    response = make_response(jsonify(formatted_data))
+    response.headers['Content-Type'] = 'application/json; charset=utf-8'  # ✅ 强制 UTF-8
+    return response
 
 
 if __name__ == '__main__':
