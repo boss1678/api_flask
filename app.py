@@ -128,8 +128,8 @@ def get_song_url(word):
 
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port=5000, debug=False)
-    s = time.time()
-    print(last('肥美多汁'))
-    e = time.time()
-    print(int(e - s))
+    app.run(host='0.0.0.0', port=5000, debug=False)
+    # s = time.time()
+    # print(last('肥美多汁'))
+    # e = time.time()
+    # print(int(e - s))
