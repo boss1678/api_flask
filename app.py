@@ -7,8 +7,7 @@ import uuid, os, shutil
 app = Flask(__name__)
 
 
-
-def get_chrome_options(temp_dir):
+def get_chrome_options():
     co = ChromiumOptions()
 
     # ✅ 启用远程调试端口（必须）
@@ -32,9 +31,6 @@ def get_chrome_options(temp_dir):
     # 清除缓存
     co.incognito()
 
-    # 指定的浏览器缓存目录
-    co.user_data_dir = temp_dir
-
     # ✅ 禁用信息栏（防止“Chrome 正由自动化软件控制”提示）
     co.set_argument('--disable-infobars')
     co.set_argument('referer', 'https://www.douyin.com/search')
@@ -46,32 +42,28 @@ def get_chrome_options(temp_dir):
 
 def get_response(song_name):
     resp_lst = []
-    temp_dir = f'/tmp/chrome_profile_{uuid.uuid4()}'
-    os.makedirs(temp_dir, exist_ok=True)
-    co = get_chrome_options(temp_dir)
+    co = get_chrome_options()
     url = f"https://www.douyin.com/search/{song_name}?aid=e8a1a21a-f91d-4f03-96ba-f14a7e8d37f7&type=general"
     page = ChromiumPage(co)
     page.listen.start('general/search/single')
-    try:
-        page.get(url)
-        page.wait(2.5)
-        for _ in range(3):
-            page.run_js('window.scrollBy(0, 1500)')
-            page.wait(1)
-            res = page.listen.wait(timeout=0.5)
-            if not res or isinstance(res, bool):
-                continue
-            resp = res.response.body
-            if isinstance(resp, str):
-                continue
-            if resp in resp_lst:
-                continue
-            resp_lst.append(resp)
-        return resp_lst
-    finally:
-        # ✅ 清理逻辑
-        page.quit()  # 关闭浏览器
-        shutil.rmtree(temp_dir, ignore_errors=True)
+    page.get(url)
+    page.wait(1.5)
+    for _ in range(3):
+        page.run_js('window.scrollBy(0, 500)')
+        page.wait(1)
+        page.run_js('window.scrollBy(0, 1000)')
+        page.wait(1)
+        res = page.listen.wait(timeout=0.5)
+        if not res or isinstance(res, bool):
+            continue
+        resp = res.response.body
+        if isinstance(resp, str):
+            continue
+        if resp in resp_lst:
+            continue
+        resp_lst.append(resp)
+    return resp_lst
+
 
 
 def song_url(item):
@@ -92,11 +84,10 @@ def song_url(item):
         url_list = play_addr.get('url_list')
         if not url_list:
             continue
-        dic = {
+        dic_lst.append({
             'desc': aweme_info.get('desc'),
             'url': url_list[-1]
-        }
-        dic_lst.append(dic)
+        })
     return dic_lst
 
 
