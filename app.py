@@ -8,6 +8,7 @@ import uuid, os, shutil
 import urllib.parse
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 
 
 def get_chrome_options():
