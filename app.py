@@ -54,7 +54,7 @@ def get_response(song_name):
     page.listen.start('general/search/single')
     try:
         page.get(url)
-        page.wait(1)
+        page.wait(2.5)
         for _ in range(3):
             page.run_js('window.scrollBy(0, 1500)')
             page.wait(1)
@@ -128,8 +128,8 @@ def get_song_url(word):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
-    # s = time.time()
-    # print(last('肥美多汁'))
-    # e = time.time()
-    # print(int(e - s))
+    # app.run(host='0.0.0.0', port=5000, debug=False)
+    s = time.time()
+    print(last('肥美多汁'))
+    e = time.time()
+    print(int(e - s))
