@@ -27,7 +27,7 @@ def get_chrome_options():
 
     # ✅ 禁用扩展（提高稳定性）
     co.set_argument('--disable-extensions')
-
+    co.incognito()
     # ✅ 禁用信息栏（防止“Chrome 正由自动化软件控制”提示）
     co.set_argument('--disable-infobars')
     co.set_argument('referer', 'https://www.douyin.com/search')
