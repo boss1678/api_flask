@@ -112,9 +112,9 @@ def index():
     return Response("Flask运行正常...", content_type='text/plain; charset=utf-8')
 
 
-@app.route('/input', methods=['GET'])
+@app.route('/search', methods=['GET'])
 def get_song_url():
-    word = request.args.get('input', '')
+    word = request.args.get('input')
     results = last(word)
     flat = [item for group in results for item in group][:10]
     # 构造扁平字典结构，每项独立键
@@ -126,9 +126,7 @@ def get_song_url():
         for i, item in enumerate(flat)
     }
 
-    response = make_response(jsonify(formatted_data))
-    response.headers['Content-Type'] = 'application/json; charset=utf-8'  # ✅ 强制 UTF-8
-    return response
+    return jsonify(formatted_data)
 
 
 if __name__ == '__main__':
