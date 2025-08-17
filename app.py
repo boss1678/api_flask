@@ -117,9 +117,12 @@ def get_song_url():
     word = request.args.get('input')
     results = last(word)
     flat = [item for group in results for item in group]
-    return jsonify({
-        word: flat
-    })
+    data = [
+        {"desc": item.get("desc", ""), "url": item.get("url", "")}
+        for item in flat
+    ]
+
+    return jsonify({"result": data})
 
 
 if __name__ == '__main__':
