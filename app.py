@@ -117,16 +117,9 @@ def get_song_url():
     word = request.args.get('input')
     results = last(word)
     flat = [item for group in results for item in group]
-    # 构造扁平字典结构，每项独立键
-    formatted_data = {
-        f"{word}_{i + 1}": {
-            "desc": item.get("desc", ""),
-            "url": item.get("url", "")
-        }
-        for i, item in enumerate(flat)
-    }
-
-    return jsonify(formatted_data)
+    return jsonify({
+        word: flat
+    })
 
 
 if __name__ == '__main__':
