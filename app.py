@@ -24,7 +24,7 @@ def get_chrome_options():
     co.set_argument('--disable-dev-shm-usage')
 
     # ✅ 无头模式（服务器无图形界面时必须）
-    # co.set_argument('--headless=new')
+    co.set_argument('--headless=new')
 
     # ✅ 禁用 GPU 加速（无头模式下建议）
     co.set_argument('--disable-gpu')
