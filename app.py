@@ -24,7 +24,7 @@ def get_chrome_options():
     co.set_argument('--disable-dev-shm-usage')
 
     # ✅ 无头模式（服务器无图形界面时必须）
-    co.set_argument('--headless=new')
+    # co.set_argument('--headless=new')
 
     # ✅ 禁用 GPU 加速（无头模式下建议）
     co.set_argument('--disable-gpu')
@@ -114,20 +114,23 @@ def index():
 
 @app.route('/search', methods=['GET'])
 def get_song_url():
-    word = request.args.get('input')
-    results = last(word)
-    flat = [item for group in results for item in group]
-    data = [
-        {"desc": item.get("desc", ""), "url": item.get("url", "")}
-        for item in flat
-    ]
-
-    return jsonify({"result": data})
+    try:
+        word = request.args.get('input', '')
+        results = last(word)
+        flat = [item for group in results for item in group]
+        data = [
+            {"desc": item.get("desc", ""), "url": item.get("url", "")}
+            for item in flat
+        ]
+        return jsonify({"result": data})
+    except Exception as e:
+        app.logger.error(f"Search error: {e}")
+        return jsonify({"error": "搜索失败，请稍后重试"}), 500
 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
     # s = time.time()
-    # print(last('肥美多汁'))
+    # print(last('不如见一面'))
     # e = time.time()
     # print(int(e - s))
